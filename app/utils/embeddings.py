@@ -30,12 +30,32 @@ class EmbeddingEngine:
 
         except Exception as e:
             raise Exception(e)
+        
+    def calculate_embeddings(self, row: pd.core.series.Series, text_column: str):
+        try:
+            abstract = row[text_column]
+            emb = self.text_to_embedding(abstract)
+            return emb
+        except Exception as e:
+            print(f'ERROR: {e}')
+            return [0]
 
 
 # Exemplo de uso
 if __name__ == "__main__":
+    # engine = EmbeddingEngine()
+    # embeddings = engine.read_csv('app/utils/test_publications.csv', 'Abstract')
+    # similarity = engine.compare_embeddings(embeddings[1], embeddings[2])
+    # print(embeddings[1], embeddings[2])
+    # print(f"Similaridade: {similarity:.4f}")
+    df = pd.read_csv('app/utils/artigos.csv')
+    df['embeddings'] = [[] for _ in range(len(df))]
+    df['embeddings'] = df['embeddings'].astype(object)
     engine = EmbeddingEngine()
-    embeddings = engine.read_csv('app/utils/test_publications.csv', 'Abstract')
-    similarity = engine.compare_embeddings(embeddings[1], embeddings[2])
-    print(embeddings[1], embeddings[2])
-    print(f"Similaridade: {similarity:.4f}")
+    for i, r in df.iterrows():
+        if i == 5:
+            break
+        emb = engine.calculate_embeddings(r, 'abstract')
+        df.at[i, 'embeddings'] = emb
+        # print(type(r))  
+    print(df['embeddings'].head())
