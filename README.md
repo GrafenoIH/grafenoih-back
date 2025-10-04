@@ -1,53 +1,53 @@
 # grafenoIH
 
-## Passo a passo para iniciar o projeto
+## Step-by-step to start the project
 
-1. **Clone o repositório**
+1. **Clone the repository**
 
    ```powershell
-   git clone <URL-do-repositório>
+   git clone <repository-URL>
    cd grafenoIH
    ```
 
-2. **Crie e ative um ambiente virtual (opcional, mas recomendado)**
+2. **Create and activate a virtual environment (optional but recommended)**
 
    ```powershell
    python -m venv venv
    .\venv\Scripts\activate
    ```
 
-3. **Instale as dependências**
+3. **Install dependencies**
 
    ```powershell
    pip install -r requirements.txt
    ```
 
-4. **Instale o FastAPI (caso não esteja no requirements.txt)**
+4. **Install FastAPI (if not in requirements.txt)**
 
    ```powershell
    pip install "fastapi[standard]"
    pip install uvicorn
    ```
 
-5. **Execute o servidor**
+5. **Run the server**
 
    ```powershell
    uvicorn main:app --reload
    ```
 
-6. **Acesse o projeto**
-   Abra o navegador e acesse: [http://localhost:8000](http://localhost:8000)
+6. **Access the project**
+   Open your browser and go to: [http://localhost:8000](http://localhost:8000)
 
-7. **Documentação automática**
-   Acesse [http://localhost:8000/docs](http://localhost:8000/docs) para ver a documentação interativa da API.
+7. **Automatic documentation**
+   Go to [http://localhost:8000/docs](http://localhost:8000/docs) to see the interactive API documentation.
 
 ---
 
-### Observações
+### Notes
 
-- Certifique-se de que o arquivo `main.py` possui uma instância chamada `app` do FastAPI.
-- O arquivo `requirements.txt` pode ser gerado com:
+- Make sure the `main.py` file has an instance called `app` from FastAPI.
+- You can generate the `requirements.txt` file with:
   ```powershell
   pip freeze > requirements.txt
   ```
-- Para dúvidas, consulte a [documentação do FastAPI](https://fastapi.tiangolo.com/).
+- For questions, check the [FastAPI documentation](https://fastapi.tiangolo.com/).
