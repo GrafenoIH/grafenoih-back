@@ -8,6 +8,9 @@ class Node(BaseModel):
 	abstract: str
 	embedding: List[float]
 
+class NodeList(BaseModel):
+    nodes: List[Node]
+
 
 
 

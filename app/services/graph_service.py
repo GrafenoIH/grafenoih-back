@@ -1,6 +1,8 @@
 
+
 from app.models.edge import Edge, EdgeList
-from app.models.node import Node
+from app.models.node import Node, NodeList
+from fastapi import HTTPException
 
 
 node1 = Node(id=1, name="Node 1", abstract="First node", embedding=[0.1, 0.2, 0.3])
@@ -16,17 +18,35 @@ edges_data = [
 ]
 
 def get_edge_by_id(edge_id: int) -> Edge:
-	if 0 <= edge_id < len(edges_data):
-		return edges_data[edge_id]
-	return None
+	try:
+		for edge in edges_data:
+			if edge.id == edge_id:
+				return edge
+		raise HTTPException(status_code=404, detail=f"Edge with id {edge_id} not found")
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 def get_all_edges() -> EdgeList:
-	return EdgeList(edges=edges_data)
+	try:
+		if not edges_data:
+			raise HTTPException(status_code=404, detail="No edges found")
+		return EdgeList(edges=edges_data)
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
-def get_node_by_id(node_id: int) -> Edge:
-	if 0 <= node_id < len(nodes_data):
-		return edges_data[node_id]
-	return None
+def get_node_by_id(node_id: int) -> Node:
+	try:
+		for node in nodes_data:
+			if node.id == node_id:
+				return node
+		raise HTTPException(status_code=404, detail=f"Node with id {node_id} not found")
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
-def get_all_nodes() -> EdgeList:
-	return EdgeList(edges=nodes_data)
+def get_all_nodes() -> NodeList:
+	try:
+		if not nodes_data:
+			raise HTTPException(status_code=404, detail="No nodes found")
+		return NodeList(nodes=nodes_data)
+	except Exception as e:
+		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
