@@ -3,9 +3,10 @@ from typing import List
 from app.models.node import Node
 
 class Edge(BaseModel):
+    id: int
     source: Node
     target: Node
-    type: str
+    type: bool
     weight: float
 
 class EdgeList(BaseModel):
