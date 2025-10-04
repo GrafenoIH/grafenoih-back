@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, HTTPException
-from app.services.graph_service import get_edge_by_id, get_all_edges, get_all_nodes, get_node_by_id 
+from app.services.graph_service import get_edge_by_id, get_all_edges, get_all_nodes, get_node_by_id, search_nodes_by_title
 from app.models.edge import EdgeList, Edge
 from app.models.node import NodeList, Node
 
@@ -28,3 +28,8 @@ def read_node(node_id: int):
 	if node is None:
 		raise HTTPException(status_code=404, detail="Node not found")
 	return node
+
+@router.get("/nodes/search/{title}", response_model=NodeList)
+def search_node(title: str):
+	nodes = search_nodes_by_title(title)
+	return nodes
