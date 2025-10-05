@@ -5,23 +5,6 @@ from app.repository.repository import read_json, create_node, create_edge, compa
 from fastapi import HTTPException
 import json
 
-nodes = []
-
-nodes_data = []
-
-edges_data = [
-
-]
-
-def get_edge_by_id(edge_id: int) -> Edge:
-	try:
-		for edge in edges_data:
-			if edge.id == edge_id:
-				return edge
-		raise HTTPException(status_code=404, detail=f"Edge with id {edge_id} not found")
-	except Exception as e:
-		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
-
 def get_all_edges() -> EdgeList:
 	try:
 		edges = []
@@ -55,7 +38,7 @@ def edge_generator():
     json_data = read_json("similarity.json")
     for i in range(len(json_data)):
         for j in range(len(json_data[i])):
-            if json_data[i][j] < 0.75  or json_data[i][j] >= 0.999 :
+            if json_data[i][j] < 0.6  or json_data[i][j] >= 0.999 :
                continue
             edge = {
                 "source": i,
@@ -99,14 +82,16 @@ def get_all_nodes():
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 	
-def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
+def search_nodes_by_title(title: str, max_distance: int = 7) -> NodeList:
     try:
+
+        nodes_data = get_all_nodes()
         matched_nodes = [
             node for node in nodes_data
             if levenshtein(node.title.lower(), title.lower()) <= max_distance
         ]
         if not matched_nodes:
-            raise HTTPException(status_code=404, detail="No nodes found with similar title")
+            return NodeList(nodes=[])
         return NodeList(nodes=matched_nodes)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
