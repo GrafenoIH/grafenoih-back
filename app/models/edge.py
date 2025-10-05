@@ -3,11 +3,10 @@ from typing import List
 from app.models.node import Node
 
 class Edge(BaseModel):
-    id: int
-    source: Node
-    target: Node
-    type: bool
-    weight: float
+    source: int
+    target: int
+    isReference: bool
+    similarity: float
 
 class EdgeList(BaseModel):
     edges: List[Edge]

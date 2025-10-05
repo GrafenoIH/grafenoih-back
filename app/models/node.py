@@ -4,9 +4,12 @@ from typing import List
 
 class Node(BaseModel):
 	id: int
-	name: str
+	title: str
 	abstract: str
-	embedding: List[float]
+	reference: str
+	authors: str
+	data: str
+	link: str
 
 class NodeList(BaseModel):
     nodes: List[Node]

@@ -18,7 +18,7 @@ def read_edge(edge_id: int):
 		raise HTTPException(status_code=404, detail="Node not found")
 	return edge
 
-@router.get("/nodes", response_model=NodeList)
+@router.get("/nodes")
 def read_all_nodes():
 	return get_all_nodes()
 
