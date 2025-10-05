@@ -4,6 +4,8 @@ from app.models.node import Node, NodeList
 from app.repository.repository import read_json, create_node, create_edge, compare_edges
 from fastapi import HTTPException
 import json
+import ijson
+from repository.repository import *
 
 nodes = []
 
@@ -100,16 +102,38 @@ def get_all_nodes():
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 	
 def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
+    matching_nodes = []
+
     try:
-        matched_nodes = [
-            node for node in nodes_data
-            if levenshtein(node.title.lower(), title.lower()) <= max_distance
-        ]
-        if not matched_nodes:
-            raise HTTPException(status_code=404, detail="No nodes found with similar title")
-        return NodeList(nodes=matched_nodes)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+        with open('data.json', 'rb') as f:
+            parser = ijson.items(f, 'item')
+
+            for id, node in enumerate(parser):
+                if id == 10:
+                    break
+                node_title = node.get("title")
+
+                if node_title and isinstance(node_title, str):
+                    distance = levenshtein(node['title'].lower(), title.lower()) <= max_distance
+                    
+                    if distance <= max_distance:
+                        matching_nodes.append(Node(
+                            id=id,
+                            title=node['title'],
+                            abstract=node['abstract'],
+                            reference=node['references'],
+                            authors=node['authors'],
+                            data=node['date'],
+                            link=node['link']
+                        ))
+    except FileNotFoundError:
+        print(f"ERROR: File not found")
+        return []
+    except ijson.JSONError as e:
+        print(f"ERROR: Parsing error")
+        return []
+        
+    return matching_nodes
 
 def levenshtein(a: str, b: str) -> int:
     if len(a) < len(b):
@@ -143,3 +167,6 @@ def node_generator():
             yield json.dumps(node.model_dump(), ensure_ascii=False) + "\n"
         except Exception as e:
             continue
+
+if __name__ == '__main__':
+	print(f'retorno: {search_nodes_by_title(title='micro')}')
