@@ -1,4 +1,4 @@
-# grafenoIH
+# grafeno
 
 ## Step-by-step to start the project
 
@@ -16,32 +16,7 @@
    .\venv\Scripts\activate
    ```
 
-3. **Install dependencies**
-
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-4. **Install FastAPI (if not in requirements.txt)**
-
-   ```powershell
-   pip install "fastapi[standard]"
-   pip install uvicorn
-   ```
-
-5. **Run the server**
-
-   ```powershell
-   uvicorn main:app --reload
-   ```
-
-6. **Access the project**
-   Open your browser and go to: [http://localhost:8000](http://localhost:8000)
-
-7. **Automatic documentation**
-   Go to [http://localhost:8000/docs](http://localhost:8000/docs) to see the interactive API documentation.
-
-8. **Build Docker**
+3. **Build Docker**
    run:
    ```powershell
    docker build -t grafenoih-api .
@@ -51,7 +26,13 @@
    docker run -d -p 8000:8000 --name grafenoih-container grafenoih-api
    ```
 
+4. **Access the project**
+   Open your browser and go to: [http://localhost:8000](http://localhost:8000)
 ---
+
+5. **Automatic documentation**
+   Go to [http://localhost:8000/docs](http://localhost:8000/docs) to see the interactive API documentation.
+
 
 ### Notes
 
@@ -61,3 +42,10 @@
   pip freeze > requirements.txt
   ```
 - For questions, check the [FastAPI documentation](https://fastapi.tiangolo.com/).
+
+### Used libraries
+[FastAPI documentation](https://fastapi.tiangolo.com/).
+[Pandas documentation](https://pandas.pydata.org/docs/).
+[Pydantic documentation](https://docs.pydantic.dev/latest/api/base_model/).
+[Functools documentation](https://docs.python.org/3/library/functools.html).
+
