@@ -55,7 +55,7 @@ def edge_generator():
     json_data = read_json("similarity.json")
     for i in range(len(json_data)):
         for j in range(len(json_data[i])):
-            if json_data[i][j] < 0.5:
+            if json_data[i][j] < 0.7:
                continue
             edge = {
                 "source": i,
