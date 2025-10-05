@@ -115,7 +115,7 @@ def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
         print(f"ERROR: Parsing error")
         return []
         
-    return matching_nodes
+    return NodeList(matching_nodes)
 
 def levenshtein(a: str, b: str) -> int:
     if len(a) < len(b):
