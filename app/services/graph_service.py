@@ -89,9 +89,9 @@ def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
     try:
         with open('data.json', 'rb') as f:
             parser = ijson.items(f, 'item')
-
+            i = 0
             for id, node in enumerate(parser):
-                if id == 10:
+                if i == 10:
                     break
                 node_title = node.get("title")
 
@@ -99,6 +99,7 @@ def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
                     distance = levenshtein(node['title'].lower(), title.lower()) <= max_distance
                     
                     if distance <= max_distance:
+                        i += 1
                         matching_nodes.append(Node(
                             id=id,
                             title=node['title'],
