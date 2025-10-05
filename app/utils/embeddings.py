@@ -81,7 +81,6 @@ def calculate_similarity(csv_path: str ,engine: EmbeddingEngine) -> list:
             
             sim = engine.compare_embeddings(row1['embedding'], row2['embedding'])
             similarity[i1][i2] = sim
-            similarity[i2][i1] = sim
     
     return similarity
 
@@ -95,4 +94,4 @@ if __name__ == "__main__":
     path = 'app/utils/artigos_embeddings.csv'
 
     s = calculate_similarity(path, engine)
-    export_json('app/utils/similarity.json', s)
+    export_json('similarity.json', s)
