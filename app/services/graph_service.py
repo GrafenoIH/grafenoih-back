@@ -5,7 +5,6 @@ from app.repository.repository import read_json, create_node, create_edge, compa
 from fastapi import HTTPException
 import json
 import ijson
-from repository.repository import *
 
 def get_all_edges() -> EdgeList:
 	try:
