@@ -35,13 +35,13 @@ def create_node(json_path: str, id: int):
         article = data[id]
 
         node = Node(
-        id = id,
-        title = article["title"],
-        abstract = article["abstract"],
-        reference = article["references"],
-        authors = article["authors"],
-        data = article["date"],
-        link = article["link"],
+            id = id,
+            title = article["title"],
+            abstract = article["abstract"],
+            reference = article["references"],
+            authors = article["authors"],
+            data = article["date"],
+            link = article["link"],
         )
 
         return node

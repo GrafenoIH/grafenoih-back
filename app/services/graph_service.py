@@ -4,9 +4,7 @@ from app.models.edge import Edge, EdgeList
 from app.models.node import Node, NodeList
 from app.repository.repository import read_json, create_node, create_edge, compare_edges
 from fastapi import HTTPException
-
-
-
+import json
 
 nodes = []
 
@@ -29,12 +27,15 @@ def get_all_edges() -> EdgeList:
 	try:
 		edges = []
 		json = read_json("similarity.json")
+		count = 0
 		for i in range(len(json)):
 			for j in range(len(json[i])):
 				id1 = i
 				id2 = j
 				similarity = json[i][j]
-				# Crie o Edge conforme seu modelo, exemplo:
+				if similarity < 0:
+					continue
+				count += 1
 				edge = Edge(
 					source=id1,
 					target=id2,
@@ -42,13 +43,28 @@ def get_all_edges() -> EdgeList:
 					similarity=similarity
 				)
 				edges.append(edge)
-		return EdgeList(edges=edges)
+		print(count)
+		return EdgeList(edges=[])
 			
 			
 
 
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+def edge_generator():
+    json_data = read_json("similarity.json")
+    for i in range(len(json_data)):
+        for j in range(len(json_data[i])):
+            if json_data[i][j] < 0.5:
+               continue
+            edge = {
+                "source": i,
+                "target": j,
+                "isReference": False,
+                "similarity": json_data[i][j]
+            }
+            yield json.dumps(edge) + "\n"
 
 def get_node_by_id(node_id: int) -> Node:
 	try:
