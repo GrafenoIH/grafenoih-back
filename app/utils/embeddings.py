@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 import ast
+import json
 
 class EmbeddingEngine:
     def __init__(self, model_name='all-MiniLM-L6-v2'):
@@ -74,5 +75,5 @@ if __name__ == "__main__":
     path = 'app/utils/artigos_embeddings.csv'
 
     s = calculate_similarity(path, engine)
-    sim_df = pd.DataFrame(s)
-    sim_df.to_csv('app/utils/similarity_matrix.csv', index=False)
+    with open('app/utils/similarity.json', 'w') as f:
+        json.dump(s, f)
