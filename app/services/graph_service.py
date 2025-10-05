@@ -55,7 +55,7 @@ def edge_generator():
     json_data = read_json("similarity.json")
     for i in range(len(json_data)):
         for j in range(len(json_data[i])):
-            if json_data[i][j] < 0.5:
+            if json_data[i][j] < 0.75  or json_data[i][j] >= 0.999 :
                continue
             edge = {
                 "source": i,
@@ -103,7 +103,7 @@ def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
     try:
         matched_nodes = [
             node for node in nodes_data
-            if levenshtein(node.name.lower(), title.lower()) <= max_distance
+            if levenshtein(node.title.lower(), title.lower()) <= max_distance
         ]
         if not matched_nodes:
             raise HTTPException(status_code=404, detail="No nodes found with similar title")
