@@ -69,11 +69,14 @@ def calculate_similarity(csv_path: str ,engine: EmbeddingEngine) -> list:
     
     return similarity
 
+def export_json(file_name: str, matrix: list):
+    with open(f'app/utils/{file_name}', 'w') as f:
+        json.dump(matrix, f)
+
 
 if __name__ == "__main__":
     engine = EmbeddingEngine()
     path = 'app/utils/artigos_embeddings.csv'
 
     s = calculate_similarity(path, engine)
-    with open('app/utils/similarity.json', 'w') as f:
-        json.dump(s, f)
+    export_json('app/utils/similarity.json', s)
