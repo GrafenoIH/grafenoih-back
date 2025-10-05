@@ -1,17 +1,15 @@
 
 from fastapi import APIRouter, HTTPException
-from app.services.graph_service import edge_generator, get_edge_by_id, get_all_edges, get_all_nodes, get_node_by_id, node_generator, search_nodes_by_title
-from app.models.edge import EdgeList, Edge
+from app.services.graph_service import edge_generator, get_all_edges, get_node_by_id, node_generator, search_nodes_by_title
+from app.models.edge import EdgeList
 from app.models.node import NodeList, Node
 from fastapi.responses import StreamingResponse
-import json
 
 router = APIRouter()
 
 @router.get("/edges", response_model=EdgeList)
 def read_all_edges():
 	return get_all_edges()
-
 
 @router.get("/edges/stream")
 def stream_edges():
@@ -32,3 +30,7 @@ def read_node(node_id: int):
 def search_node(title: str):
 	nodes = search_nodes_by_title(title)
 	return nodes
+
+@router.get("/health")
+def health_check():
+	return {"status": "ok"}
