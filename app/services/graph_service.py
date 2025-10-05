@@ -1,4 +1,3 @@
-
 from functools import lru_cache
 from app.models.edge import Edge, EdgeList
 from app.models.node import Node, NodeList
@@ -100,8 +99,6 @@ def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
         return NodeList(nodes=matched_nodes)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
-	
-
 
 def levenshtein(a: str, b: str) -> int:
     if len(a) < len(b):
@@ -118,3 +115,20 @@ def levenshtein(a: str, b: str) -> int:
             current_row.append(min(insertions, deletions, substitutions))
         previous_row = current_row
     return previous_row[-1]
+
+def node_generator():
+    nodes_json = read_json("data.json")
+    for i, article in enumerate(nodes_json):
+        try:
+            node = Node(
+                id=i,
+                title=article.get("title"),
+                abstract=article.get("abstract"),
+                reference=article.get("references"),
+                authors=article.get("authors"),
+                data=article.get("date"),  
+                link=article.get("link"),
+            )
+            yield json.dumps(node.model_dump(), ensure_ascii=False) + "\n"
+        except Exception as e:
+            continue
