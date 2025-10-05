@@ -17,11 +17,11 @@ def read_all_edges():
 def stream_edges():
     return StreamingResponse(edge_generator(), media_type="application/x-ndjson")
 
-@router.get("/nodestream")
+@router.get("/nodes/stream")
 def read_all_nodes():
 	return StreamingResponse(node_generator(), media_type="application/x-ndjson")
 
-@router.get("/nodes/{node_id}", response_model=Node)
+@router.get("/node/{node_id}", response_model=Node)
 def read_node(node_id: int):
 	node = get_node_by_id(node_id)
 	if node is None:

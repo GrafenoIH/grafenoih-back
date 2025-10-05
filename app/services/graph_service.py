@@ -67,9 +67,20 @@ def edge_generator():
 
 def get_node_by_id(node_id: int) -> Node:
 	try:
-		for node in nodes_data:
-			if node.id == node_id:
-				return node
+		nodes_json = read_json("data.json")
+		for index, node in enumerate(nodes_json):
+			if node_id == index:
+				
+				return Node(
+					abstract= node["abstract"],
+					authors=node["authors"],
+					title=node["title"],
+					data=node["date"],
+					link=node["link"],
+					reference=node["references"],
+					id=index
+                )
+      
 		raise HTTPException(status_code=404, detail=f"Node with id {node_id} not found")
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
