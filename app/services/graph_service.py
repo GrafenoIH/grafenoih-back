@@ -83,13 +83,12 @@ def get_all_nodes():
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 	
-def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
+def search_nodes_by_title(title: str, max_distance: int = 15) -> NodeList:
     matching_nodes = []
-
     try:
+        i = 0
         with open('data.json', 'rb') as f:
             parser = ijson.items(f, 'item')
-            i = 0
             for id, node in enumerate(parser):
                 if i == 10:
                     break
@@ -109,9 +108,6 @@ def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
                             data=node['date'],
                             link=node['link']
                         ))
-    except FileNotFoundError:
-        print(f"ERROR: File not found")
-        return []
     except ijson.JSONError as e:
         print(f"ERROR: Parsing error")
         return []
