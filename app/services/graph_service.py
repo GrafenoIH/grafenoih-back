@@ -5,6 +5,7 @@ from app.repository.repository import read_json, create_node, create_edge, compa
 from fastapi import HTTPException
 import json
 import ijson
+from rapidfuzz import fuzz
 
 def get_all_edges() -> EdgeList:
 	try:
@@ -83,7 +84,7 @@ def get_all_nodes():
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 	
-def search_nodes_by_title(title: str, max_distance: int = 15) -> NodeList:
+def search_nodes_by_title(title: str, max_distance: int = 73) -> NodeList:
     matching_nodes = []
     try:
         i = 0
@@ -115,20 +116,21 @@ def search_nodes_by_title(title: str, max_distance: int = 15) -> NodeList:
     return NodeList(nodes=matching_nodes)
 
 def levenshtein(a: str, b: str) -> int:
-    if len(a) < len(b):
-        return levenshtein(b, a)
-    if len(b) == 0:
-        return len(a)
-    previous_row = range(len(b) + 1)
-    for i, c1 in enumerate(a):
-        current_row = [i + 1]
-        for j, c2 in enumerate(b):
-            insertions = previous_row[j + 1] + 1
-            deletions = current_row[j] + 1
-            substitutions = previous_row[j] + (c1 != c2)
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-    return previous_row[-1]
+    # if len(a) < len(b):
+    #     return levenshtein(b, a)
+    # if len(b) == 0:
+    #     return len(a)
+    # previous_row = range(len(b) + 1)
+    # for i, c1 in enumerate(a):
+    #     current_row = [i + 1]
+    #     for j, c2 in enumerate(b):
+    #         insertions = previous_row[j + 1] + 1
+    #         deletions = current_row[j] + 1
+    #         substitutions = previous_row[j] + (c1 != c2)
+    #         current_row.append(min(insertions, deletions, substitutions))
+    #     previous_row = current_row
+    # return previous_row[-1]
+    return fuzz.token_set_ratio(a, b)
 
 def node_generator():
     nodes_json = read_json("data.json")
