@@ -83,7 +83,7 @@ def get_all_nodes():
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 	
-def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
+def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
     matching_nodes = []
 
     try:
