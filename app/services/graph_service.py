@@ -103,7 +103,7 @@ def search_nodes_by_title(title: str, max_distance: int = 8) -> NodeList:
     try:
         matched_nodes = [
             node for node in nodes_data
-            if levenshtein(node.name.lower(), title.lower()) <= max_distance
+            if levenshtein(node.title.lower(), title.lower()) <= max_distance
         ]
         if not matched_nodes:
             raise HTTPException(status_code=404, detail="No nodes found with similar title")
