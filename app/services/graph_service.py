@@ -84,9 +84,7 @@ def get_all_nodes():
 			node = create_node("data.json", i)
 			nodes.append(node)
 		
-		print(nodes)
-		
-		return "realizando proessamento"
+		return nodes
 
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
