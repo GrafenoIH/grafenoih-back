@@ -41,6 +41,16 @@
 7. **Automatic documentation**
    Go to [http://localhost:8000/docs](http://localhost:8000/docs) to see the interactive API documentation.
 
+8. **Build Docker**
+   run:
+   ```powershell
+   docker build -t grafenoih-api .
+   ```
+
+   ```powershell
+   docker run -d -p 8000:8000 --name grafenoih-container grafenoih-api
+   ```
+
 ---
 
 ### Notes
