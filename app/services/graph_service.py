@@ -96,7 +96,7 @@ def search_nodes_by_title(title: str, max_distance: int = 5) -> NodeList:
                 node_title = node.get("title")
 
                 if node_title and isinstance(node_title, str):
-                    distance = levenshtein(node['title'].lower(), title.lower()) <= max_distance
+                    distance = levenshtein(node['title'].lower(), title.lower())
                     
                     if distance <= max_distance:
                         i += 1
