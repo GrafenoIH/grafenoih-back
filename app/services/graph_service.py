@@ -1,4 +1,3 @@
-from functools import lru_cache
 from app.models.edge import Edge, EdgeList
 from app.models.node import Node, NodeList
 from app.repository.repository import read_json, create_node, create_edge, compare_edges
@@ -70,7 +69,6 @@ def get_node_by_id(node_id: int) -> Node:
 	except Exception as e:
 		raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
-# @lru_cache(maxsize=None)
 def get_all_nodes():
 	try:
 		nodes_json = read_json("data.json")
