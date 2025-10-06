@@ -18,8 +18,8 @@ RUN pip install --upgrade pip \
 # copiar o código da aplicação
 COPY . .
 
-# expor porta (uvicorn padrão 8000)
-EXPOSE 8000
+
+EXPOSE 8080
 
 # comando padrão (ajuste o path conforme sua estrutura)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
